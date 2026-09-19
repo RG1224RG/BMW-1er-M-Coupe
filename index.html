@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="Interaktive One-Page-Website über das BMW 1er M Coupé E82 — Daten, Technik, Design, Fahrgefühl, Geschichte und Galerie.">
+  <title>BMW 1er M Coupé</title>
+  <style>
+    :root{
+      --bg:#06101c;
+      --bg2:#0a1726;
+      --panel:rgba(13,28,45,.84);
+      --panel2:#10243b;
+      --line:rgba(120,194,255,.22);
+      --blue:#21a5ff;
+      --blue2:#64d1ff;
+      --orange:#ff6b21;
+      --orange2:#ff9a52;
+      --text:#f4f8fc;
+      --muted:#9eb2c6;
+      --shadow:0 22px 55px rgba(0,0,0,.38);
+      --radius:24px;
+      --max:1220px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(33,165,255,.18), transparent 30%),
+        radial-gradient(circle at 88% 18%, rgba(255,107,33,.16), transparent 27%),
+        linear-gradient(180deg,#050c15 0%,#07121f 45%,#050b13 100%);
+      line-height:1.6;
+    }
+
+    a{color:inherit}
+    img{display:block;max-width:100%}
+    .container{width:min(var(--max),calc(100% - 40px));margin:auto}
+
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(5,12,21,.82);
+      backdrop-filter:blur(18px);
+    }
+    .nav{
+      min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px
+    }
+    .brand{
+      display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;
+      font-size:.84rem;
+    }
+    .brand-mark{
+      width:34px;height:34px;border-radius:50%;
+      background:conic-gradient(from 45deg,var(--blue),var(--blue2),var(--orange),var(--orange2),var(--blue));
+      box-shadow:0 0 24px rgba(33,165,255,.25);
+      position:relative;
+    }
+    .brand-mark:after{
+      content:"M";position:absolute;inset:3px;border-radius:50%;display:grid;place-items:center;
+      background:#07111f;font-size:.75rem;color:#fff;font-style:italic
+    }
+
+    .menu{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .menu a{
+      text-decoration:none;color:#c9d8e6;font-size:.9rem;padding:9px 12px;border-radius:999px;
+      border:1px solid transparent;transition:.2s ease
+    }
+    .menu a:hover,.menu a:focus{color:#fff;border-color:var(--line);background:rgba(33,165,255,.08);outline:none}
+
+    header.hero{position:relative;min-height:calc(100vh - 72px);display:grid;align-items:center;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:44px;align-items:center;padding:78px 0 68px}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);
+      border-radius:999px;background:rgba(33,165,255,.08);color:#c7eaff;font-weight:800;font-size:.78rem;
+      letter-spacing:.12em;text-transform:uppercase
+    }
+    h1{
+      margin:18px 0 12px;font-size:clamp(3.1rem,7vw,6.8rem);line-height:.92;letter-spacing:-.055em;
+    }
+    .gradient-text{
+      background:linear-gradient(105deg,#fff 0%,#fff 38%,var(--blue2) 62%,var(--orange) 92%);
+      -webkit-background-clip:text;background-clip:text;color:transparent
+    }
+    .hero p{font-size:1.12rem;color:#bdcddd;max-width:720px;margin:0 0 28px}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      text-decoration:none;font-weight:850;border-radius:14px;padding:13px 17px;border:1px solid transparent;
+      transition:transform .18s ease,box-shadow .18s ease,background .18s ease
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:linear-gradient(90deg,var(--blue),#2e72ff);box-shadow:0 12px 30px rgba(33,165,255,.18)}
+    .btn-secondary{border-color:var(--line);background:rgba(255,255,255,.03)}
+
+    .hero-card{
+      position:relative;border:1px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow);
+      background:#091727;min-height:540px
+    }
+    .hero-card img{width:100%;height:100%;min-height:540px;object-fit:cover;object-position:center}
+    .hero-card:after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(180deg,transparent 45%,rgba(5,13,23,.85) 100%);
+      pointer-events:none
+    }
+    .hero-badge{
+      position:absolute;z-index:2;right:18px;top:18px;padding:10px 13px;border-radius:999px;
+      background:rgba(5,12,21,.75);border:1px solid rgba(255,255,255,.12);font-size:.78rem;font-weight:850;
+      backdrop-filter:blur(12px)
+    }
+    .hero-caption{
+      position:absolute;z-index:2;left:22px;right:22px;bottom:20px;display:flex;justify-content:space-between;
+      align-items:end;gap:20px
+    }
+    .hero-caption strong{font-size:1.35rem}
+    .hero-caption span{color:#bed0df;font-size:.83rem}
+
+    .kpis{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px
+    }
+    .kpi{border:1px solid var(--line);background:rgba(12,26,43,.78);border-radius:18px;padding:17px}
+    .kpi b{display:block;font-size:1.55rem;letter-spacing:-.03em}
+    .kpi small{display:block;color:var(--muted);margin-top:3px}
+
+    section{padding:94px 0}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:28px}
+    .section-kicker{color:var(--orange2);font-weight:850;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
+    h2{margin:5px 0 0;font-size:clamp(2rem,4vw,3.3rem);line-height:1.04;letter-spacing:-.04em}
+    .section-intro{max-width:760px;color:#aabed0;margin:0 0 26px}
+
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .panel{
+      background:linear-gradient(180deg,rgba(15,33,52,.92),rgba(8,20,34,.9));
+      border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:0 18px 45px rgba(0,0,0,.18)
+    }
+    .panel h3{margin:0 0 10px;font-size:1.22rem}
+    .panel p{color:#b6c8d8}
+    .accent-left{border-left:4px solid var(--orange)}
+    .accent-blue{border-left:4px solid var(--blue)}
+
+    .specs{width:100%;border-collapse:collapse}
+    .specs tr{border-bottom:1px solid rgba(255,255,255,.07)}
+    .specs tr:last-child{border-bottom:0}
+    .specs td{padding:12px 6px;vertical-align:top}
+    .specs td:first-child{color:#98acbe;width:48%}
+    .specs td:last-child{font-weight:780;text-align:right}
+
+    .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+    .stat{padding:18px;border-radius:18px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)}
+    .stat .num{font-size:2rem;font-weight:900;letter-spacing:-.04em}
+    .stat .label{font-size:.82rem;color:#9db1c3}
+
+    .timeline{display:grid;gap:12px}
+    .timeline-item{display:grid;grid-template-columns:100px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+    .timeline-item:last-child{border-bottom:0}
+    .year{font-weight:900;color:var(--blue2)}
+    .timeline-item p{margin:0;color:#b7c8d6}
+
+    .feel{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+    .meter{margin-top:16px}
+    .meter-row{display:grid;grid-template-columns:120px 1fr 44px;gap:10px;align-items:center;margin:13px 0}
+    .bar{height:10px;border-radius:99px;background:#12283e;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+    .bar > span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--blue),var(--orange))}
+    .meter-row small{color:#9eb2c4}
+
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    figure{margin:0;position:relative;overflow:hidden;border-radius:21px;border:1px solid rgba(255,255,255,.09);background:#0b1827}
+    figure.wide{grid-column:span 2}
+    figure img{width:100%;height:280px;object-fit:cover;transition:transform .45s ease,filter .45s ease}
+    figure.wide img{height:360px}
+    figure:hover img{transform:scale(1.035);filter:saturate(1.08)}
+    figcaption{padding:12px 14px 14px;color:#c8d4df;font-size:.82rem}
+    .tag{display:inline-block;margin-bottom:6px;padding:4px 8px;border-radius:999px;background:rgba(255,107,33,.1);border:1px solid rgba(255,107,33,.28);color:#ffb17e;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+
+    .quote{
+      position:relative;padding:30px;border-radius:var(--radius);overflow:hidden;
+      background:linear-gradient(135deg,rgba(33,165,255,.12),rgba(255,107,33,.11));
+      border:1px solid var(--line)
+    }
+    .quote:before{content:"“";position:absolute;right:16px;top:-28px;font-size:9rem;color:rgba(255,255,255,.06);font-family:Georgia,serif}
+    .quote p{font-size:1.15rem;color:#dae6ef;max-width:900px}
+    .quote small{color:#9db1c4}
+
+    details{
+      border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.025);
+      padding:0 16px;margin-top:12px
+    }
+    summary{cursor:pointer;padding:16px 2px;font-weight:820}
+    details p{color:#aebfd0;padding:0 2px 15px;margin:0}
+
+    footer{padding:55px 0 70px;border-top:1px solid rgba(255,255,255,.07);color:#8fa6ba}
+    .footer-grid{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+    .source-list{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+    .source-list a{display:inline-block;padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.08);text-decoration:none;font-size:.78rem}
+    .source-list a:hover{border-color:var(--line);color:#fff}
+
+    .reveal{animation:rise .7s ease both}
+    @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+    @media (max-width: 940px){
+      .hero-grid,.feel,.grid-2{grid-template-columns:1fr}
+      .hero-card,.hero-card img{min-height:420px}
+      .kpis{grid-template-columns:repeat(2,1fr)}
+      .gallery{grid-template-columns:1fr 1fr}
+      figure.wide{grid-column:span 2}
+    }
+    @media (max-width: 680px){
+      .container{width:min(var(--max),calc(100% - 24px))}
+      .nav{align-items:flex-start;padding:12px 0}
+      .menu{gap:4px}
+      .menu a{font-size:.76rem;padding:7px 9px}
+      .hero-grid{padding:55px 0 30px}
+      .hero-card,.hero-card img{min-height:320px}
+      .kpis,.gallery,.stat-grid{grid-template-columns:1fr}
+      figure.wide{grid-column:span 1}
+      figure img,figure.wide img{height:260px}
+      .footer-grid{grid-template-columns:1fr}
+      .source-list{justify-content:flex-start}
+      .meter-row{grid-template-columns:95px 1fr 34px}
+    }
+  </style>
+</head>
+<body>
+  <nav class="topbar" aria-label="Hauptnavigation">
+    <div class="container nav">
+      <a class="brand" href="#start" aria-label="BMW 1er M Coupé Startseite">
+        <span class="brand-mark" aria-hidden="true"></span>
+        1er M · E82
+      </a>
+      <div class="menu">
+        <a href="#daten">Daten</a>
+        <a href="#technik">Technik</a>
+        <a href="#design">Design</a>
+        <a href="#fahrgefuehl">Fahrgefühl</a>
+        <a href="#geschichte">Geschichte</a>
+        <a href="#galerie">Galerie</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="start" class="hero">
+    <div class="container hero-grid">
+      <div class="reveal">
+        <span class="eyebrow">BMW M · E82 · 2011–2012</span>
+        <h1><span class="gradient-text">1er M<br>Coupé.</span></h1>
+        <p>Ein kompaktes Heckantriebs-Coupé mit Reihensechszylinder, zwei Turboladern, Handschaltung und klassischer M-Fahrwerksphilosophie</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#daten">Daten entdecken →</a>
+          <a class="btn btn-secondary" href="#galerie">Bilder öffnen</a>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><b>340 PS</b><small>250 kW</small></div>
+          <div class="kpi"><b>500 Nm</b><small>Overboost</small></div>
+          <div class="kpi"><b>4,9 s</b><small>0–100 km/h</small></div>
+          <div class="kpi"><b>250 km/h</b><small>elektronisch begrenzt</small></div>
+        </div>
+      </div>
+
+      <div class="hero-card reveal">
+        <span class="hero-badge">ALPINE WHITE · E82</span>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/2011%20BMW%201%20Series%20M%20Coup%C3%A9%20%28E82%29%20%286223827101%29.jpg?width=1800"
+             alt="Weißes BMW 1er M Coupé E82 auf einer Automesse"
+             loading="eager"
+             referrerpolicy="no-referrer">
+        <div class="hero-caption">
+          <div><strong>Breit. Kurz. Direkt.</strong><br><span>Der E82 als M Coupé</span></div>
+          <span>01 / 08</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="daten">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">01 · Daten</div>
+            <h2>Die wichtigsten Zahlen.</h2>
+          </div>
+        </div>
+        <p class="section-intro">Die technischen Eckdaten unten orientieren sich an den BMW-Werksangaben für das 1er M Coupé. Beim Verbrauch handelt es sich um den damaligen EU-Testwert nach NEFZ.</p>
+
+        <div class="grid-2">
+          <article class="panel accent-blue">
+            <h3>Antrieb & Performance</h3>
+            <table class="specs">
+              <tr><td>Motor</td><td>3,0 l R6 · M TwinPower Turbo</td></tr>
+              <tr><td>Leistung</td><td>250 kW / 340 PS</td></tr>
+              <tr><td>Drehmoment</td><td>450 Nm · bis 500 Nm Overboost</td></tr>
+              <tr><td>Getriebe</td><td>6-Gang manuell</td></tr>
+              <tr><td>Antrieb</td><td>Hinterradantrieb</td></tr>
+              <tr><td>0–100 km/h</td><td>4,9 s</td></tr>
+              <tr><td>0–200 km/h</td><td>17,3 s</td></tr>
+              <tr><td>Vmax</td><td>250 km/h, elektronisch begrenzt</td></tr>
+            </table>
+          </article>
+
+          <article class="panel accent-left">
+            <h3>Alltag & Effizienz</h3>
+            <table class="specs">
+              <tr><td>EU-Verbrauch (NEFZ)</td><td>9,6 l / 100 km</td></tr>
+              <tr><td>CO₂ (NEFZ)</td><td>224 g/km</td></tr>
+              <tr><td>Leistungsgewicht</td><td>4,4 kg / PS</td></tr>
+              <tr><td>Räder</td><td>19″ M Leichtmetallräder</td></tr>
+              <tr><td>Differenzial</td><td>M Differenzialsperre</td></tr>
+              <tr><td>Karosserie</td><td>2-türiges Coupé</td></tr>
+              <tr><td>Produktionszeitraum</td><td>2011–2012</td></tr>
+            </table>
+          </article>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat"><div class="num">2.997 cm³</div><div class="label">Hubraum des N54-Reihensechsers</div></div>
+          <div class="stat"><div class="num">5.900 rpm</div><div class="label">Nennleistung bei rund 5.900/min</div></div>
+          <div class="stat"><div class="num">3. ×</div><div class="label">große Lufteinlässe im M-Frontdesign</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="technik">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">02 · Technik</div>
+            <h2>Warum der E82 so direkt wirkt.</h2>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="panel">
+            <h3>N54 · Twin Turbo</h3>
+            <p>Der Reihensechszylinder arbeitet mit zwei kompakten Turboladern. BMW beschreibt dadurch ein spontanes Ansprechverhalten und 450 Nm bereits ab 1.500/min; bei Volllast kann Overboost das Drehmoment auf bis zu 500 Nm anheben.</p>
+            <details>
+              <summary>Was bedeutet Overboost?</summary>
+              <p>Unter bestimmten Volllastbedingungen steigt das maximale Drehmoment zeitweise um 50 Nm. Genau diese zusätzliche Reserve gehört zu den markanten Leistungsmerkmalen des 1er M Coupé.</p>
+            </details>
+          </article>
+
+          <article class="panel">
+            <h3>Fahrwerk & Sperre</h3>
+            <p>Das M Coupé nutzt eine breitere Spur, spezifische Fahrwerkstechnik und eine M Differenzialsperre. BMW führt außerdem Air Curtains als aerodynamisches Detail der Frontpartie auf.</p>
+            <details>
+              <summary>Warum ist die Sperre relevant?</summary>
+              <p>Die mechanische Sperrwirkung kann beim Beschleunigen aus Kurven dabei helfen, Antriebsmoment zwischen den Hinterrädern nutzbarer zu machen. Das verändert vor allem das Verhalten bei kräftigem Herausbeschleunigen.</p>
+            </details>
+          </article>
+        </div>
+
+        <div class="quote" style="margin-top:22px">
+          <p>„Pure Driving“ ist bei diesem Auto vor allem als technisches Paket lesbar: kompakte Abmessungen, Hinterradantrieb, 6-Gang-Handschaltung, Reihensechser und mechanische Sperrwirkung.</p>
+          <small>BMW M beschreibt das 1er M Coupé als kompaktes Performance-Fahrzeug mit Handschaltung und Hinterradantrieb.</small>
+        </div>
+      </div>
+    </section>
+
+    <section id="design">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">03 · Design</div>
+            <h2>Breite Schultern, vier Endrohre.</h2>
+          </div>
+        </div>
+        <p class="section-intro">Vom verbreiterten Kotflügel bis zur markanten Heckpartie ist das M Coupé nicht nur ein kleines 1er Coupé mit mehr Leistung. Die Karosserie wurde sichtbar und funktional auf die Technik abgestimmt.</p>
+
+        <div class="gallery">
+          <figure class="wide">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/2011%20BMW%201%20Series%20M%201.jpg?width=1800"
+                 alt="BMW 1er M Coupé E82, Front-Dreiviertelansicht" loading="lazy" referrerpolicy="no-referrer">
+            <figcaption><span class="tag">Front</span><br>Die drei großen Lufteinlässe prägen die M-spezifische Front.</figcaption>
+          </figure>
+
+          <figure>
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/BMW%201M%20Coupe.jpg?width=1400"
+                 alt="Weißes BMW 1er M Coupé E82, Detailansicht" loading="lazy" referrerpolicy="no-referrer">
+            <figcaption><span class="tag">Details</span><br>Weiße Karosserie und die M-typischen Proportionen setzen die Akzente.</figcaption>
+          </figure>
+
+          <figure>
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/BMW%201M%20%287%29.jpg?width=1400"
+       alt="BMW 1er M Coupé E82, Heckansicht"
+       loading="lazy"
+       referrerpolicy="no-referrer">
+
+  <figcaption>
+    <span class="tag">Heck</span><br>
+    Markante M-Heckpartie mit breiten Radhäusern, Diffusor und vier Endrohren.
+  </figcaption>
+</figure>
+
+          <figure>
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/2011%20BMW%201%20Series%20M%20Coupe%20Orange%20BS%20O24.jpg?width=1500"
+                 alt="BMW 1er M Coupé E82 in Orange" loading="lazy" referrerpolicy="no-referrer">
+            <figcaption><span class="tag">Valencia Orange</span><br>Die exklusive orange Lackierung wurde von BMW als Farbfinish angeboten.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="fahrgefuehl">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">04 · Fahrgefühl</div>
+            <h2>Direkt, mechanisch, heckgetrieben.</h2>
+          </div>
+        </div>
+        <div class="feel">
+          <article class="panel">
+            <h3>Was du am Steuer erwarten kannst</h3>
+            <p>Die Kombination aus Hinterradantrieb, Handschaltung, kurzer Karosserie und kräftigem Turbomotor erzeugt ein Fahrerlebnis, bei dem die Bedienung des Autos stärker im Mittelpunkt steht als bei vielen modernen Automatik-Sportwagen.</p>
+            <p>BMW betont die spontane Leistungsentfaltung. Der ADAC hob bei seinem zeitgenössischen Test insbesondere Lenkung, sportliches Fahrwerk, Bremsanlage und Schaltgetriebe hervor.</p>
+            <div class="meter" aria-label="Qualitative Einordnung">
+              <div class="meter-row"><span>Lenkgefühl</span><div class="bar"><span style="width:92%"></span></div><small>direkt</small></div>
+              <div class="meter-row"><span>Schaltarbeit</span><div class="bar"><span style="width:96%"></span></div><small>hoch</small></div>
+              <div class="meter-row"><span>Traktion</span><div class="bar"><span style="width:84%"></span></div><small>RWD</small></div>
+              <div class="meter-row"><span>Alltag</span><div class="bar"><span style="width:68%"></span></div><small>sportlich</small></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h3>Kurvenausgang statt Zahlenfetisch</h3>
+            <p>Die Fahrcharakteristik lässt sich besonders gut über das Zusammenspiel der Systeme verstehen: Drehmoment früh anliegend, manuelle Gangwahl, mechanische Sperrwirkung und die breitere M-Abstimmung. Dadurch wird der Fahrer stärker Teil des Antriebsprozesses.</p>
+            <div class="stat-grid">
+              <div class="stat"><div class="num">6</div><div class="label">Gänge von Hand</div></div>
+              <div class="stat"><div class="num">2</div><div class="label">Turbolader</div></div>
+              <div class="stat"><div class="num">RWD</div><div class="label">Antrieb hinten</div></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="geschichte">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">05 · Geschichte</div>
+            <h2>Ein kurzer Produktionslauf.</h2>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="year">2010</div>
+              <p>BMW präsentiert das 1er M Coupé als konzentriertes M-Modell für das kompakte Segment.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="year">2011</div>
+              <p>Produktionsstart und Marktphase des E82 1er M Coupé. BMW nennt 340 PS, 500 Nm mit Overboost und 4,9 s auf 100 km/h.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="year">2012</div>
+              <p>Das Produktionsfenster endet. BMW Group Plant Leipzig führt für das 1er M Coupé 6.309 produzierte Fahrzeuge im Zeitraum 2011–2012.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="year">später</div>
+              <p>BMW M veröffentlichte rückblickend die Zahl von 6.309 ausgelieferten Exemplaren und beschreibt das Modell als modernes M-Kultfahrzeug.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="galerie">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">06 · Galerie</div>
+            <h2>Das Auto aus mehreren Blickwinkeln.</h2>
+          </div>
+        </div>
+        <div class="gallery">
+          <figure class="wide">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/BMW%201-Series%20Coup%C3%A9%20%28E82%29%20M%20Coup%C3%A9%20%282011%29%20%2853464656006%29.jpg?width=1800"
+                 alt="BMW 1er M Coupé E82 in hoher Auflösung" loading="lazy" referrerpolicy="no-referrer">
+            <figcaption><span class="tag">E82</span><br>Detailreiche Aufnahme des 1er M Coupé.</figcaption>
+          </figure>
+          <figure>
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/BMW%201%20M%20%2814496961730%29.jpg?width=1400"
+                 alt="Schwarzes BMW 1er M Coupé, Heckdetail" loading="lazy" referrerpolicy="no-referrer">
+            <figcaption><span class="tag">Heck</span><br>Vier Endrohre, Spoilerlippe und kompakte Heckgrafik in schwarzer Lackierung.</figcaption>
+          </figure>
+          <figure>
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/BMW%201M%20Coup%C3%A9%20%289857826983%29.jpg?width=1400"
+                 alt="BMW 1er M Coupé Detailaufnahme" loading="lazy" referrerpolicy="no-referrer">
+            <figcaption><span class="tag">Detail</span><br>Ein weiterer Blick auf die Proportionen des E82 in Weiß.</figcaption>
+          </figure>
+<figure>
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/BMW%201M%202012%20%2850365240331%29.jpg?width=1600"
+       alt="BMW 1er M Coupé E82 aus dem Jahr 2012"
+       loading="lazy"
+       referrerpolicy="no-referrer"
+       style="object-fit:contain;">
+
+  <figcaption>
+    <span class="tag">2012</span><br>
+    Der BMW 1er M Coupé mit seiner markanten M-Silhouette, breiten Radhäusern und sportlichen Proportionen.
+  </figcaption>
+</figure>        
+<figure>
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/BMW%201er%20M%20Coup%C3%A9%20%285546194811%29.jpg?width=1600"
+       alt="BMW 1er M Coupé mit geöffneter Motorhaube"
+       loading="lazy"
+       referrerpolicy="no-referrer"
+       style="object-fit:contain;">
+
+  <figcaption>
+    <span class="tag">Motorraum</span><br>
+    Blick auf den N54-Reihensechszylinder des 1er M Coupé bei geöffneter Motorhaube.
+  </figcaption>
+</figure>
+<figure>
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/BMW%201M%20Interior.jpg?width=1600"
+       alt="Interieur des BMW 1er M Coupé E82"
+       loading="lazy"
+       referrerpolicy="no-referrer"
+       style="object-fit:contain;">
+
+  <figcaption>
+    <span class="tag">Interieur</span><br>
+    Interieur des BMW 1er M Coupé mit M-Sportsitzen, Sportlenkrad und charakteristischen M-Details.
+  </figcaption>
+</figure>
+</div>
+
+        <div class="quote" style="margin-top:22px">
+          <p>Bildquellen sind in der Fußzeile verlinkt. Wikimedia-Commons-Bilder stehen jeweils unter den auf der Dateiseite angegebenen Lizenzen; externe Presse-/Bildquellen bleiben ihren jeweiligen Rechteinhabern zugeordnet.</p>
+          <small>Die Website nutzt bewusst keine eingebetteten Tracking-Skripte oder Frameworks.</small>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <strong style="color:#dce9f3">BMW 1er M Coupé · E82</strong>
+        <p style="margin:.4rem 0 0;max-width:760px">BMW 1er M Coupé</p>
+      </div>
+      <div class="source-list" aria-label="Quellen">
+        <a href="https://www.press.bmwgroup.com/deutschland/article/detail/T0091933DE/das-bmw-1er-m-coup%C3%A9" target="_blank" rel="noopener">BMW Press: Modell</a>
+        <a href="https://www.press.bmwgroup.com/deutschland/article/detail/T0092093DE/technische-daten-bmw-1er-m-coup%C3%A9-gueltig-ab-03/2011" target="_blank" rel="noopener">BMW: Technische Daten</a>
+        <a href="https://www.bmw-m.com/de/topics/magazine-article-pool/bmw-1er-m-coupe.html" target="_blank" rel="noopener">BMW M: Rückblick</a>
+        <a href="https://www.bmwgroup-werke.com/content/dam/grpw/websites/bmwgroup-werke_com/leipzig/aktuelles/3%2C333%2C333rd_Vehicle_made_at_BMW_Group_Plant_Leipzig_.PDF" target="_blank" rel="noopener">BMW Leipzig: Produktion</a>
+        <a href="https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/1er-reihe/e82-e88-facelift-2/226788/" target="_blank" rel="noopener">ADAC: Testdaten</a>
+        <a href="https://commons.wikimedia.org/wiki/Category:BMW_1_Series_M_Coupe" target="_blank" rel="noopener">Wikimedia Commons: Galerie</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
